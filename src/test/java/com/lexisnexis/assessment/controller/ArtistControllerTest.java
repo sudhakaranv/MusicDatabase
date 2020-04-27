@@ -45,7 +45,7 @@ public class ArtistControllerTest {
 
 		artists.add(artist);
 
-		Mockito.when(artistService.getAllArtists(Mockito.anyString(), Mockito.anyString(), Mockito.anyInt(),
+		Mockito.when(artistService.getAllArtists(Mockito.isNull(),Mockito.isNull(), Mockito.anyInt(),
 				Mockito.anyInt())).thenReturn(artists);
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/artists").accept(MediaType.APPLICATION_JSON);

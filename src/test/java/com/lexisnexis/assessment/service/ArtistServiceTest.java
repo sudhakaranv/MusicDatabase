@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -29,7 +30,8 @@ import com.lexisnexis.assessment.model.Artist;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @TestInstance(Lifecycle.PER_CLASS)
-@TestMethodOrder(OrderAnnotation.class) 
+@TestMethodOrder(OrderAnnotation.class)
+@Transactional
 public class ArtistServiceTest {
 
 	@Autowired
@@ -93,11 +95,6 @@ public class ArtistServiceTest {
 
 		Artist artist = new Artist();
 		
-		//missing mandatory body attribute
-		Throwable exception = assertThrows(ConstraintViolationException.class, () -> {artistService.addArtist(artist);});
-	    assertEquals("name should not be empty", exception.getMessage());
-	    
-	    
 		artist.setName("Test Artist");
 		
 		List<String> updatedArtistList=new ArrayList<String>();
@@ -113,6 +110,13 @@ public class ArtistServiceTest {
 		
 		assertEquals(updatedArtistList, actualArtistList);
 		
+        
+		Artist artist2 = new Artist();
+		
+		//missing mandatory body attribute
+		assertThrows(ConstraintViolationException.class, () -> {artistService.addArtist(artist2);});
+	      
+		
 		
 	
 	}
@@ -124,10 +128,6 @@ public class ArtistServiceTest {
 		long id=3;
 		
 		Artist artist = new Artist();
-		
-		//missing mandatory body attribute
-		Throwable exception = assertThrows(ConstraintViolationException.class, () -> {artistService.updateArtist(id,artist);});
-	    assertEquals("name should not be empty", exception.getMessage());
 		
 		artist.setName("Newtest Artist");
 		
