@@ -45,13 +45,14 @@ public class ArtistControllerTest {
 
 		artists.add(artist);
 
-		Mockito.when(artistService.getAllArtists(Mockito.isNull(),Mockito.isNull(), Mockito.anyInt(),
-				Mockito.anyInt())).thenReturn(artists);
+		Mockito.when(
+				artistService.getAllArtists(Mockito.isNull(), Mockito.isNull(), Mockito.anyInt(), Mockito.anyInt()))
+				.thenReturn(artists);
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/artists").accept(MediaType.APPLICATION_JSON);
 
-		mvc.perform(requestBuilder).andExpect(status().isOk())
-				.andExpect(jsonPath("$[0].id", is(1))).andExpect(jsonPath("$[0].name", is("Test Artist")));
+		mvc.perform(requestBuilder).andExpect(status().isOk()).andExpect(jsonPath("$[0].id", is(1)))
+				.andExpect(jsonPath("$[0].name", is("Test Artist")));
 
 	}
 
